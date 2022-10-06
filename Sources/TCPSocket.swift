@@ -114,7 +114,7 @@ public final class TCPSocket {
         let size = socklen_t(MemoryLayout<sockaddr_in6>.size)
         // bind the address and port on socket
         guard withUnsafePointer(to: &address, { pointer in
-            return pointer.withMemoryRebound(to: sockaddr.self, capacity: Int(size)) { pointer in
+            return pointer.withMemoryRebound(to: sockaddr.self, capacity: Int32(size)) { pointer in
                 return SystemLibrary.bind(fileDescriptor, pointer, size) >= 0
             }
         }) else {
@@ -162,7 +162,7 @@ public final class TCPSocket {
         let size = socklen_t(MemoryLayout<sockaddr_in6>.size)
         // connect to the host and port
         let connectResult = withUnsafePointer(to: &address) { pointer in
-            return pointer.withMemoryRebound(to: sockaddr.self, capacity: Int32(size)) { pointer in
+            return pointer.withMemoryRebound(to: sockaddr.self, capacity: Int(size)) { pointer in
                 return SystemLibrary.connect(fileDescriptor, pointer, size)
             }
         }
